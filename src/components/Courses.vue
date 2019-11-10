@@ -40,8 +40,8 @@
                         <br>
                         <br>
                         <div>
-                            <button id="add-course-button" class="blue-button">+</button>
-                            <span id="add-course">
+                            <button id="add-course-button" class="blue-button" v-on:click="isOpen = !isOpen">+</button>
+                            <span v-show="isOpen" id="add-course">
                                 <input class="input" type="text" placeholder="Course title" id="title">
                                 <input class="input" type="number" min="1" max="8" placeholder="Semester" id="semester">
                                 <input class="input" type="number" min="0" max="100" placeholder="Grade" id="grade">
@@ -54,7 +54,17 @@
 
 <script>
 export default {
-  name: "Courses"
+  name: "Courses",
+    data: function() {
+return {
+      isOpen: false
+    };
+},
+    methods: {
+        toggle: function(){
+            this.isOpen = !this.isOpen
+        }
+    }
 };
 </script>
 

@@ -21,7 +21,7 @@ export default {
   name: "Main",
   components: {
     Profile,
-    Courses
+    Courses,
   },
  data: () => {
     return {
