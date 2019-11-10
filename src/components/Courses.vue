@@ -25,11 +25,11 @@
                         <div>
                             <button id="add-course-button" class="blue-button" v-on:click="isOpen = !isOpen">+</button>
                             <span v-show="isOpen" id="add-course-active">
-                                <input class="input" type="text" placeholder="Course title" id="title" v-model="pealkiri">
-                                <input class="input" type="number" min="1" max="8" placeholder="Semester" id="semester">
-                                <input class="input" type="number" min="0" max="100" placeholder="Grade" id="grade">
-                                <button v-on:click="send" class="green-button" id="save-course">Save</button>
-                                <button v-on:click="isOpen = !isOpen" class="grey-button" id="cancel-course">Cancel</button>
+                                <input v-model="input.title" class="input" id="title" placeholder="Course title" type="text">
+                                <input v-model="input.semester" class="input" id="semester" max="8" min="1" placeholder="Semester" type="number">
+                                <input v-model="input.grade" class="input" id="grade" max="100" min="0" placeholder="Grade" type="number">
+                                <button @click="send" class="green-button" id="save-course">Save</button>
+                                <button @click="cleanInput" class="grey-button" id="cancel-course">Cancel</button>
                             </span>
                         </div>
                     </div>
@@ -48,7 +48,8 @@ export default {
                     new Course("Underwater Basket Weaving", 3, 19),
                     new Course("Dog watching", 3, 100)
                 ],
-             isOpen: false,
+            isOpen: false,
+            input: {},
             pealkiri: "",
     };
 },
@@ -57,10 +58,26 @@ export default {
             this.isOpen = !this.isOpen,
             this.pealkiri = ""
         },
-        send: function () {
-        }
 
-    }
+        send: function () {
+            this.courses.push(new Course(this.input.title, this.input.semester, this.input.grade));
+            this.cleanInput();
+        },
+
+        cleanInput: function () {
+                this.input = {};
+                this.toggle();
+            },
+
+    },
+    created() {
+            this.$emit("changedCourses", this.courses);
+        },
+    watch: {
+            courses: function () {
+                this.$emit("changedCourses", this.courses);
+            }
+        }
 };
 </script>
 

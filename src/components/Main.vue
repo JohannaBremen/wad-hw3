@@ -2,8 +2,8 @@
     <section id="container">
             <section id="main">
                 <div class="content">
-                   <Profile :class="this.profileTabActive ? 'tab-active' : 'tab'"/>
-                   <Courses :class="this.coursesTabActive ? 'tab-active' : 'tab'"/>
+                   <Profile :gpa="gpa" :class="this.profileTabActive ? 'tab-active' : 'tab'"/>
+                   <Courses @changedCourses="changedCourses" :class="this.coursesTabActive ? 'tab-active' : 'tab'"/>
                 </div>
                 <div class="controls">
                     <button id="profile-button" :class="this.profileTabActive ? 'pill active' : 'pill'" @click="toggleProfile">Profile</button>
@@ -26,7 +26,8 @@ export default {
  data: () => {
     return {
       profileTabActive: true,
-      coursesTabActive: false
+      coursesTabActive: false,
+      courses: []
     };
   },
   methods: {
@@ -37,8 +38,18 @@ export default {
     toggleCourses: function() {
       this.profileTabActive = false;
       this.coursesTabActive = true;
+    },
+    changedCourses: function(val){
+      this.courses = val;
     }
-  }
+  },
+  computed: {
+            gpa: function () {
+                return Math.round(this.courses.reduce(function (total, c) {
+                    return total + (c.grade > 60 ? Math.floor((c.grade - 51) / 10) : c.grade > 50 ? 0.5 : 0)
+                }, 0) / this.courses.length * 100) / 100
+            }
+        }
   
 };
 </script>

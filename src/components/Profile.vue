@@ -27,7 +27,15 @@ export default {
   
     data: function() {
       return {
-        person: new User('John', 'Doe', '11/10/1990', 'Software Engineering', 2.75)
+        person: new User('John', 'Doe', '11/10/1990', 'Software Engineering', 0)
+      }
+    },
+  props: {
+      gpa: Number
+    },
+    watch: {
+      gpa: function (val) {
+        this.person.gpa = val;
       }
     }
 };
