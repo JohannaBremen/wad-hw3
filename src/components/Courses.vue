@@ -25,11 +25,11 @@
                         <div>
                             <button id="add-course-button" class="blue-button" v-on:click="isOpen = !isOpen">+</button>
                             <span v-show="isOpen" id="add-course-active">
-                                <input class="input" type="text" placeholder="Course title" id="title">
+                                <input class="input" type="text" placeholder="Course title" id="title" v-model="pealkiri">
                                 <input class="input" type="number" min="1" max="8" placeholder="Semester" id="semester">
                                 <input class="input" type="number" min="0" max="100" placeholder="Grade" id="grade">
-                                <button class="green-button" id="save-course">Save</button>
-                                <button class="grey-button" id="cancel-course">Cancel</button>
+                                <button v-on:click="send" class="green-button" id="save-course">Save</button>
+                                <button v-on:click="isOpen = !isOpen" class="grey-button" id="cancel-course">Cancel</button>
                             </span>
                         </div>
                     </div>
@@ -48,13 +48,18 @@ export default {
                     new Course("Underwater Basket Weaving", 3, 19),
                     new Course("Dog watching", 3, 100)
                 ],
-             isOpen: false
+             isOpen: false,
+            pealkiri: "",
     };
 },
     methods: {
         toggle: function(){
-            this.isOpen = !this.isOpen
+            this.isOpen = !this.isOpen,
+            this.pealkiri = ""
+        },
+        send: function () {
         }
+
     }
 };
 </script>
