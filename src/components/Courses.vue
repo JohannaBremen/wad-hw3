@@ -11,29 +11,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Agile software development</td>
-                    <td>1</td>
-                    <td>82</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>System modeling</td>
-                    <td>1</td>
-                    <td>85</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Object-oriented programming</td>
-                    <td>2</td>
-                    <td>99</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Estonian language Level A2</td>
-                    <td>2</td>
-                    <td>65</td>
+                <tr v-for="(course, index) in courses"
+                :key="index">
+                <td>{{ index+1 }}</td>
+                <td>{{ course.title }}</td>
+                <td>{{course.semester}}</td>
+                <td>{{ course.grade }}</td>
                 </tr>
                 </tbody>
                 </table>
@@ -41,7 +24,7 @@
                         <br>
                         <div>
                             <button id="add-course-button" class="blue-button" v-on:click="isOpen = !isOpen">+</button>
-                            <span v-show="isOpen" id="add-course">
+                            <span v-show="isOpen" id="add-course-active">
                                 <input class="input" type="text" placeholder="Course title" id="title">
                                 <input class="input" type="number" min="1" max="8" placeholder="Semester" id="semester">
                                 <input class="input" type="number" min="0" max="100" placeholder="Grade" id="grade">
@@ -53,11 +36,19 @@
 </template>
 
 <script>
+import Course from "../classes/Course";
 export default {
   name: "Courses",
     data: function() {
-return {
-      isOpen: false
+        return {
+            courses: [
+                    new Course("Algorithms and data structures", 3, 89),
+                    new Course("Web application development", 3, 40),
+                    new Course("Object oriented programming", 2, 95),
+                    new Course("Underwater Basket Weaving", 3, 19),
+                    new Course("Dog watching", 3, 100)
+                ],
+             isOpen: false
     };
 },
     methods: {

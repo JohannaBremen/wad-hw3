@@ -6,13 +6,13 @@
             </div>
             <div class="info">
                 <ul>
-                    <li id="name">John Doe</li>
-                    <li id="birthdate">11/10/1990</li>
-                    <li id="faculty">Software Engineering</li>
+                    <li id="name">{{ person.firstname }} {{ person.lastname }}</li>
+                    <li id="birthdate">{{person.birthdate}}</li>
+                    <li id="faculty">{{person.faculty}}</li>
                 </ul>
             </div>
             <div id="gpa">
-                <strong>2.75</strong>
+                <strong>{{person.gpa}}</strong>
             </div>
             <div class="clear-fix"></div>
         </div>
@@ -20,8 +20,16 @@
 </template>
 
 <script>
+import User from "../classes/User"
+
 export default {
-  name: "Profile"
+  name: "Profile",
+  
+    data: function() {
+      return {
+        person: new User('John', 'Doe', '11/10/1990', 'Software Engineering', 2.75)
+      }
+    }
 };
 </script>
 
